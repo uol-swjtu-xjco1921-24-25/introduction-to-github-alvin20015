@@ -19,16 +19,18 @@ all: $(GEN_EXEC) $(PLAY_EXEC)
 
 # 生成迷宫文件的可执行文件
 $(GEN_EXEC): $(GEN_OBJS)
-	$(CC) $(CFLAGS) -o $(GEN_EXEC) $(GEN_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(GEN_OBJS)
 
 # 运行迷宫游戏的可执行文件
 $(PLAY_EXEC): $(PLAY_OBJS)
-	$(CC) $(CFLAGS) -o $(PLAY_EXEC) $(PLAY_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(PLAY_OBJS)
 
-# 编译每个源文件生成目标文件
+# 编译每个源文件生成目标文件（添加头文件依赖）
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# 清理目标文件和可执行文件
+# 清理目标文件和可执行文件（兼容类 Unix 和 Windows）
 clean:
-	del $(GEN_OBJS) $(PLAY_OBJS) $(GEN_EXEC) $(PLAY_EXEC)
+	@echo "清理文件..."
+	@rm -f $(GEN_OBJS) $(PLAY_OBJS) $(GEN_EXEC) $(PLAY_EXEC)
+	@del /Q $(GEN_OBJS) $(PLAY_OBJS) $(GEN_EXEC) $(PLAY_EXEC) 2>nul || true
