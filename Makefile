@@ -4,11 +4,11 @@ CFLAGS = -Wall -Werror
 
 # 可执行文件名称
 GEN_EXEC = mazegen
-PLAY_EXEC = main
+PLAY_EXEC = maze
 
 # 源文件
 GEN_SRCS = mazegen.c
-PLAY_SRCS = main.c
+PLAY_SRCS = maze.c
 
 # 目标文件
 GEN_OBJS = $(GEN_SRCS:.c=.o)
