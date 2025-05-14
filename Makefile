@@ -33,4 +33,4 @@ $(PLAY_EXEC): $(PLAY_OBJS)
 clean:
 	@echo "清理文件..."
 	@rm -f $(GEN_OBJS) $(PLAY_OBJS) $(GEN_EXEC) $(PLAY_EXEC)
-	@del /Q $(GEN_OBJS) $(PLAY_OBJS) $(GEN_EXEC) $(PLAY_EXEC) 2>nul || true
+	@del /Q $(GEN_OBJS) $(PLAY_OBJS) $(GEN_EXEC) $(PLAY_EXEC) 2 || true

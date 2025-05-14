@@ -211,10 +211,25 @@ int generate_maze(const char *filename, int width, int height) {
     return 0;
 }
 
+
 // 主函数，用于生成迷宫文件
 int main(int argc, char *argv[]) {
+    if (argc != 4) {
+        fprintf(stderr, " Usage: %s <filename> <width> <height>\n", argv[0]);
+        return 1;
+    }
+    int width = atoi(argv[2]);
+    int height = atoi(argv[3]);
 
-    if (generate_maze("test.txt", 5, 5) != 0) {
+    if (width % 2 == 0  || height % 2 == 0) {
+        if (width % 2 == 0) width--;
+        if (height % 2 == 0) height--;
+        printf("Note: The width and height of the maze have been adjusted to odd numbers, and the actual generated size is %d x %d\n", width, height);
+    }
+    
+
+
+    if (generate_maze(argv[1], width, height) != 0) {
         return 1;
     }
 
