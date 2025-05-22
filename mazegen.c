@@ -7,6 +7,12 @@
 #define MIN_SIZE 5
 #define MAX_SIZE 100
 
+#define WALL_CHAR '#'
+#define PATH_CHAR ' '
+#define START_CHAR 'S'
+#define END_CHAR 'E'
+
+
 // 定义迷宫结构体
 typedef struct {
     char **grid;
@@ -68,7 +74,7 @@ int init_maze(Maze *maze, int width, int height) {
             return -1;
         }
         for (int j = 0; j < width; j++) {
-            maze->grid[i][j] = '#';
+            maze->grid[i][j] = WALL_CHAR;
         }
     }
     return 0;
@@ -106,8 +112,9 @@ void set_start_end(Maze *maze) {
     maze->start_y = start_y;
     maze->end_x = end_x;
     maze->end_y = end_y;
-    maze->grid[start_y][start_x] = 'S';
-    maze->grid[end_y][end_x] = 'E';
+    maze->grid[start_y][start_x] = START_CHAR;
+    maze->grid[end_y][end_x] = END_CHAR;
+
 }
 
 // 保存迷宫到文件
@@ -178,10 +185,9 @@ void kruskal_maze(Maze *maze) {
         int index2 = y2 * maze->width + x2;
 
         if (find(index1) != find(index2)) {
-            union_sets(index1, index2);
-            maze->grid[y1][x1] = ' ';
-            maze->grid[y2][x2] = ' ';
-            maze->grid[(y1 + y2) / 2][(x1 + x2) / 2] = ' ';
+            maze->grid[y1][x1] = PATH_CHAR;
+            maze->grid[y2][x2] = PATH_CHAR;
+            maze->grid[(y1 + y2) / 2][(x1 + x2) / 2] = PATH_CHAR;
         }
     }
 
