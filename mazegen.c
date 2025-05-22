@@ -117,6 +117,8 @@ void set_start_end(Maze *maze) {
 
 }
 
+
+
 // 保存迷宫到文件
 int save_maze(Maze *maze, const char *filename) {
     FILE *file = fopen(filename, "w");
@@ -133,6 +135,16 @@ int save_maze(Maze *maze, const char *filename) {
     fclose(file);
     return 0;
 }
+
+void shuffle_edges(Edge *edges, int edge_count) {
+    for (int i = edge_count - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        Edge temp = edges[i];
+        edges[i] = edges[j];
+        edges[j] = temp;
+    }
+}
+
 
 // 使用Kruskal算法生成迷宫
 void kruskal_maze(Maze *maze) {
@@ -167,12 +179,8 @@ void kruskal_maze(Maze *maze) {
     }
 
     // 随机打乱边的顺序
-    for (int i = edge_count - 1; i > 0; i--) {
-        int j = rand() % (i + 1);
-        Edge temp = edges[i];
-        edges[i] = edges[j];
-        edges[j] = temp;
-    }
+    shuffle_edges(edges, edge_count);
+
 
     // 遍历所有边
     for (int i = 0; i < edge_count; i++) {
@@ -194,6 +202,15 @@ void kruskal_maze(Maze *maze) {
     free(edges);
 }
 
+void print_maze(Maze *maze) {
+    for (int i = 0; i < maze->height; i++) {
+        for (int j = 0; j < maze->width; j++) {
+            putchar(maze->grid[i][j]);
+        }
+        putchar('\n');
+    }
+}
+
 // 生成迷宫
 int generate_maze(const char *filename, int width, int height) {
     if (filename == NULL || filename[0] == '\0') {
@@ -213,6 +230,7 @@ int generate_maze(const char *filename, int width, int height) {
 
     kruskal_maze(&maze);
     set_start_end(&maze);
+    print_maze(&maze);
 
     if (save_maze(&maze, filename) != 0) {
         free_maze(&maze);
