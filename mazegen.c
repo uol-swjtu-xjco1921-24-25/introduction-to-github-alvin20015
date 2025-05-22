@@ -190,8 +190,13 @@ void kruskal_maze(Maze *maze) {
 
 // 生成迷宫
 int generate_maze(const char *filename, int width, int height) {
+    if (filename == NULL || filename[0] == '\0') {
+        fprintf(stderr, "错误：文件名不能为空。\n");
+        return -1;
+    }
+
     if (width < MIN_SIZE || width > MAX_SIZE || height < MIN_SIZE || height > MAX_SIZE) {
-        fprintf(stderr, "宽度和高度必须在 %d 到 %d 之间\n", MIN_SIZE, MAX_SIZE);
+        fprintf(stderr, "错误：宽度和高度必须在 %d 到 %d 之间\n", MIN_SIZE, MAX_SIZE);
         return -1;
     }
 
